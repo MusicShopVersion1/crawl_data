@@ -13,7 +13,7 @@ df.columns = df.columns.str.replace('Thunbnail', 'Thumbnail')
 
 # Product: Name, Price, Thumbnail, Description, Year, Quality
 df_Product = df[['Name', 'Price', 'Thumbnail', 'Description', 'Year', 'Quality']]
-df_Product.to_csv('product/product.csv', sep='\t', encoding='utf-8')
+df_Product.to_csv('product/product.csv', sep='\t', encoding='utf-8', index=False)
 
 
 # Category        1-n
@@ -26,7 +26,7 @@ for index, row in df_Category.iterrows():
         # print(row['Name'], Category)
         dffinal_Category = dffinal_Category.append({'Name': row['Name'], 'Category': Category}, ignore_index=True)
 
-dffinal_Category.to_csv('product/category.csv', sep='\t', encoding='utf-8')
+dffinal_Category.to_csv('product/category.csv', sep='\t', encoding='utf-8', index=False)
 
 
 # Brand          n-n
@@ -40,10 +40,10 @@ for index, row in df_Brand.iterrows():
 
 # Product_Brand
 df_Product_Brand['Brand'] = df_Product_Brand['Brand'].str.strip()
-df_Product_Brand.to_csv('product/product_brand.csv', sep='\t', encoding='utf-8')
+df_Product_Brand.to_csv('product/product_brand.csv', sep='\t', encoding='utf-8', index=False)
 # Brand
 Brand_series = df_Product_Brand['Brand'].drop_duplicates()
 Brand_series = Brand_series.replace({'': np.nan})
 Brand_series = Brand_series.dropna()
 Brand_series = Brand_series.reset_index(drop=True)
-Brand_series.to_csv('product/brand.csv', sep='\t', encoding='utf-8')
+Brand_series.to_csv('product/brand.csv', sep='\t', encoding='utf-8', index=False)
