@@ -18,12 +18,21 @@ df_Product['Category'] = df_Product['Category'].str.replace('[', '')
 df_Product['Category'] = df_Product['Category'].str.replace(']', '')
 df_Product['Category'] = df_Product['Category'].str.replace("'", '')
 
+df_Product['Price'] = df_Product['Price'].str.replace(".", '').astype(float)
+
+
 # Drop null; ''
 df_Product.fillna('NULL', inplace=True)
 df_Product.fillna(0, inplace=True)
 df_Product.replace(to_replace='', value='NULL', inplace=True)
 # Drop special character at First, Last elements
 df_Product['Brand'] = df_Product['Brand'].apply(lambda x: x.strip("*&%,"))
+
+# Add ['Amount', 'Discount'] column and sort df
+df_Product['Amount'] = 0
+df_Product['Discount'] = 0.0
+
+df_Product = df_Product[['Name', 'Amount', 'Price', 'Discount', 'Thumbnail', 'Description', 'Year', 'Quality', 'Category', 'Brand']]
 
 # Save
 df_Product.to_excel("product/product.xlsx", index=False, encoding='utf-8')
@@ -62,3 +71,8 @@ Brand_series = Brand_series.replace({'': np.nan})
 Brand_series = Brand_series.dropna()
 Brand_series = Brand_series.reset_index(drop=True)
 Brand_series.to_csv('product/brand.csv', sep='\t', encoding='utf-8', index=False)
+
+
+
+
+print(df_Product.dtypes)
